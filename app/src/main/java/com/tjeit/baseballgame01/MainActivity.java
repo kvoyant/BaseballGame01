@@ -8,12 +8,18 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.tjeit.baseballgame01.databinding.ActivityMainBinding;
+import com.tjeit.baseballgame01.datas.Chat;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
 
     ActivityMainBinding act;
 
-    int[] computerExamArray;
+    int[] computerExamArray = new int[3];
+
+    List<Chat> chatList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +35,7 @@ public class MainActivity extends BaseActivity {
         act.inputBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                chatList.add(new Chat(true, act.userInputEdt.getText().toString()));
                 checkStrikeAndBalls();
             }
         });
@@ -48,23 +55,23 @@ public class MainActivity extends BaseActivity {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
 
-                if(userInputArray[i] == computerExamArray[j]) {
-                    if(i == j) {
+                if (userInputArray[i] == computerExamArray[j]) {
+                    if (i == j) {
 //                        숫자, 위치 모두 같음 (S:스트라이크)
                         strikeCount++;
-                    }
-                    else {
+                    } else {
                         ballCount++;
                     }
                 }
             }
         }
 
-        if(strikeCount == 3) {
-            Toast.makeText(mContext, "정답입니다! 축하합니다!",Toast.LENGTH_SHORT).show();
-        }
-        else {
-            Toast.makeText(mContext, String.format("%dS, %dB",strikeCount,ballCount),Toast.LENGTH_SHORT).show();
+        if (strikeCount == 3) {
+            Toast.makeText(mContext, "정답입니다! 축하합니다!", Toast.LENGTH_SHORT).show();
+            chatList.add(new Chat(false, "정답입니다! 축하합니다!"));
+        } else {
+            Toast.makeText(mContext, String.format("%dS, %dB", strikeCount, ballCount), Toast.LENGTH_SHORT).show();
+            chatList.add(new Chat(false, String.format("%dS, %dB",strikeCount, ballCount)));
         }
     }
 
@@ -106,7 +113,7 @@ public class MainActivity extends BaseActivity {
                 computerExamArray[2] = tempNumber[2];
 
 
-                Log.d("정답 숫자", randomNumber+" 입니다.");
+                Log.d("정답 숫자", randomNumber + " 입니다.");
                 break;
             }
 
