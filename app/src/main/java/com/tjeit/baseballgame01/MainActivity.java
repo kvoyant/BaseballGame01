@@ -16,9 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity {
-
+//  데이터 바인딩을 위한 변수
     ActivityMainBinding act;
 
+//  컴퓨터가 출제한 문제 3자리 숫자
     int[] computerExamArray = new int[3];
 
     List<Chat> chatList = new ArrayList<>();
