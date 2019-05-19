@@ -39,6 +39,7 @@ public class MainActivity extends BaseActivity {
             public void onClick(View v) {
                 chatList.add(new Chat(true, act.userInputEdt.getText().toString()));
                 mChatAdapter.notifyDataSetChanged();
+                act.messageListView.smoothScrollToPosition(chatList.size()-1);
 
                 checkStrikeAndBalls();
             }
@@ -74,10 +75,12 @@ public class MainActivity extends BaseActivity {
             Toast.makeText(mContext, "정답입니다! 축하합니다!", Toast.LENGTH_SHORT).show();
             chatList.add(new Chat(false, "정답입니다! 축하합니다!"));
             mChatAdapter.notifyDataSetChanged();
+            act.messageListView.smoothScrollToPosition(chatList.size()-1);
         } else {
             Toast.makeText(mContext, String.format("%dS, %dB", strikeCount, ballCount), Toast.LENGTH_SHORT).show();
             chatList.add(new Chat(false, String.format("%dS, %dB",strikeCount, ballCount)));
             mChatAdapter.notifyDataSetChanged();
+            act.messageListView.smoothScrollToPosition(chatList.size()-1);
         }
     }
 
