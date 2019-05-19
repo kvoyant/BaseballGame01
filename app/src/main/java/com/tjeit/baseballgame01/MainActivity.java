@@ -1,6 +1,7 @@
 package com.tjeit.baseballgame01;
 
 import android.databinding.DataBindingUtil;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -71,16 +72,26 @@ public class MainActivity extends BaseActivity {
             }
         }
 
+        final int strikeFinalCount = strikeCount;
+        final int ballFinalCount = ballCount;
+
         if (strikeCount == 3) {
-            Toast.makeText(mContext, "정답입니다! 축하합니다!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext, "정답입니다! 축하합니다!", Toast.LENGTH_SHORT).show();
             chatList.add(new Chat(false, "정답입니다! 축하합니다!"));
             mChatAdapter.notifyDataSetChanged();
             act.messageListView.smoothScrollToPosition(chatList.size()-1);
         } else {
-            Toast.makeText(mContext, String.format("%dS, %dB", strikeCount, ballCount), Toast.LENGTH_SHORT).show();
-            chatList.add(new Chat(false, String.format("%dS, %dB",strikeCount, ballCount)));
-            mChatAdapter.notifyDataSetChanged();
-            act.messageListView.smoothScrollToPosition(chatList.size()-1);
+//            Toast.makeText(mContext, String.format("%dS, %dB", strikeCount, ballCount), Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    chatList.add(new Chat(false, String.format("%dS, %dB",strikeFinalCount, ballFinalCount)));
+                    mChatAdapter.notifyDataSetChanged();
+                    act.messageListView.smoothScrollToPosition(chatList.size()-1);
+                }
+            }, 1000);
+
         }
     }
 
